@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: LittleJake
- * Date: 2019/7/13
- * Time: 1:35
- */
-
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 /**
  *
@@ -86,35 +79,30 @@ class Hitokoto_Plugin implements Typecho_Plugin_Interface
 
         $time = time();
 
-        if(is_file("hitokoto.json") &&
-            is_readable("hitokoto.json")) {
-            $json = @file_get_contents("hitokoto.json");
+        if(is_readable("./hitokoto.json")) {
+            $json = @file_get_contents("./hitokoto.json");
             $json = json_decode($json, true);
 
             if($time - $json['time'] < 120)
                 return "<strong>$json[hitokoto]</strong>\n
                         <p>————$json[from]</p>";
-        } else if(!is_file("hitokoto.json") && file_put_contents("hitokoto.json","") &&
-            is_readable("hitokoto.json")) {
-            //curl获取json
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, self::$api);
-            curl_setopt ($ch, CURLOPT_HTTPHEADER, array('Content-type:application/json'));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-            $json = curl_exec($ch);
-            curl_close($ch);
-
-
-            $json = json_decode($json, true);
-            $json['time'] = $time;
-            @file_put_contents("hitokoto.json", json_encode($json));
-
-            return "<strong>$json[hitokoto]</strong>\n
-                        <p>————$json[from]</p>";
         }
 
-        return "<p>请检查目录插件权限</p>";
+        //curl获取json
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, self::$api);
+        curl_setopt ($ch, CURLOPT_HTTPHEADER, array('Content-type:application/json'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        $json = curl_exec($ch);
+        curl_close($ch);
+
+
+        $json = json_decode($json, true);
+        $json['time'] = $time;
+        if(!@file_put_contents("./hitokoto.json", json_encode($json)))
+            return "<p>请检查目录插件权限</p>";
+
+        return "<strong>$json[hitokoto]</strong>\n
+                        <p>————$json[from]</p>";
     }
-
-
 }
