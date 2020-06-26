@@ -21,7 +21,6 @@ class Hitokoto_Plugin implements Typecho_Plugin_Interface
     {
         Typecho_Plugin::factory('Widget_Archive')->beforeRender = array(
             'Hitokoto_Plugin',
-            'getHitokoto',
         );
 
     }
