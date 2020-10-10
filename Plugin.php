@@ -6,12 +6,13 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  *
  * @package Typecho-Hitokoto
  * @author  LittleJake
- * @version 1.0.0
- * @link https://blog.littlejake.tk
+ * @version 1.0.1
+ * @link https://blog.littlejake.net
  */
 class Hitokoto_Plugin implements Typecho_Plugin_Interface
 {
     private static $api = "https://v1.hitokoto.cn/?c=a";
+    private static $api_inter = "https://international.v1.hitokoto.cn/?c=a";
     /**
      * 激活插件方法
      *
@@ -19,10 +20,7 @@ class Hitokoto_Plugin implements Typecho_Plugin_Interface
      */
     public static function activate()
     {
-        Typecho_Plugin::factory('Widget_Archive')->beforeRender = array(
-            'Hitokoto_Plugin',
-        );
-
+        Typecho_Plugin::factory('Widget_Archive')->beforeRender = array('Hitokoto_Plugin');
     }
 
     /**
@@ -49,7 +47,16 @@ class Hitokoto_Plugin implements Typecho_Plugin_Interface
             _t('是否显示')
         );
 
+        $api_type = new Typecho_Widget_Helper_Form_Element_Radio(
+            'api_type',
+            array('int' => _t('海外'),
+                'cn' => _t('中国')),
+            'cn',
+            _t('选择一言服务器')
+        );
+
         $form->addInput($display);
+        $form->addInput($api_type);
     }
 
     /**
@@ -66,13 +73,16 @@ class Hitokoto_Plugin implements Typecho_Plugin_Interface
      * 获取一言
      *
      * @access public
-     * @return array
+     * @return string
      * @throws
      */
     public static function getHitokoto()
     {
+        //TODO 添加类型参数、自定义class、tag参数
         $display = Typecho_Widget::widget('Widget_Options')
             ->plugin('Hitokoto')->display == 0?false:true;
+        $url = Typecho_Widget::widget('Widget_Options')
+            ->plugin('Hitokoto')->api_type == 'cn'?self::$api:self::$api_inter;
 
         if(!$display)
             return null;
@@ -90,8 +100,9 @@ class Hitokoto_Plugin implements Typecho_Plugin_Interface
 
         //curl获取json
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, self::$api);
-        curl_setopt ($ch, CURLOPT_HTTPHEADER, array('Content-type:application/json'));
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type:application/json'));
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
         $json = curl_exec($ch);
         curl_close($ch);

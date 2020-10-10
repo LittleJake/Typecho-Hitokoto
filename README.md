@@ -14,6 +14,7 @@ api 可自行替换 `Plugin.php` 变量 `$api`
 json：
 ````json
 // https://v1.hitokoto.cn/
+// https://international.v1.hitokoto.cn/
 
 {
   "id": 542,
@@ -30,7 +31,7 @@ json：
 
 ## 安装方法
 
-1. `git clone`或zip下载，将 Hitokoto 文件夹放入 usr/plugins 文件夹内，文件夹权限0755，插件文件0644。
+1. `git clone`或zip下载，在 usr/plugins 文件夹内创建文件夹 Hitokoto 并放入文件，文件夹权限0755，插件文件0644。
 
 2. 打开Typecho后台激活插件
 
