@@ -3,13 +3,12 @@
 [![HitCount](http://hits.dwyl.io/LittleJake/Typecho-hitokoto.svg)](http://hits.dwyl.io/LittleJake/Typecho-hitokoto)
 > 无论在哪里遇到你，我都会喜欢上你。
 
-调用一言接口 `https://v1.hitokoto.cn/?c=a` 返回json
+调用一言接口 `https://v1.hitokoto.cn/` 返回json数据
+
+现在接口设置为可选：国内、国际
 
 具体接口调用选项参考 [这里](https://hitokoto.cn/api)
 
-api 可自行替换 `Plugin.php` 变量 `$api`
-
-> <del>就是喜欢动漫怎么着</del>
 
 json：
 ````json
@@ -31,7 +30,7 @@ json：
 
 ## 安装方法
 
-1. `git clone`或zip下载，在 usr/plugins 文件夹内创建文件夹 Hitokoto 并放入文件，文件夹权限0755，插件文件0644。
+1. `git clone`或 [zip下载](https://github.com/LittleJake/Typecho-Hitokoto/releases) ，在 usr/plugins 文件夹内创建文件夹 Hitokoto 并放入文件，文件夹权限0755，插件文件0644。
 
 2. 打开Typecho后台激活插件
 
@@ -39,6 +38,8 @@ json：
 ```php
 <?php echo Hitokoto_Plugin::getHitokoto() ?>
 ```
+
+4. 根据站点需要，在设置中定制个性化需求、修改自定义模板
 
     
 
