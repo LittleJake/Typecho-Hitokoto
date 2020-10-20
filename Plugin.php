@@ -155,6 +155,7 @@ EOF
         curl_setopt($ch, CURLOPT_URL, $url.$category);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type:application/json'));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
         $json = curl_exec($ch);
         curl_close($ch);
@@ -169,6 +170,8 @@ EOF
     }
 
     /**
+     * 用于处理、格式化json不同类型的数据
+     *
      * @param $array
      * @return string|string[]
      * @throws Typecho_Exception
