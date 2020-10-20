@@ -13,7 +13,7 @@ class Hitokoto_Plugin implements Typecho_Plugin_Interface
 {
     private static $api = "https://v1.hitokoto.cn/?";
     private static $api_inter = "https://international.v1.hitokoto.cn/?";
-    private static $category = [];
+
     /**
      * 激活插件方法
      *
@@ -22,20 +22,6 @@ class Hitokoto_Plugin implements Typecho_Plugin_Interface
     public static function activate()
     {
         Typecho_Plugin::factory('Widget_Archive')->beforeRender = array('Hitokoto_Plugin');
-        self::$category = [
-            'a' => _t('动画'),
-            'b' => _t('漫画'),
-            'c' => _t('游戏'),
-            'd' => _t('文学'),
-            'e' => _t('原创'),
-            'f' => _t('来自网络'),
-            'g' => _t('其他'),
-            'h' => _t('影视'),
-            'i' => _t('诗词'),
-            'j' => _t('网易云'),
-            'k' => _t('哲学'),
-            'l' => _t('抖机灵'),
-        ];
     }
 
     /**
@@ -75,7 +61,20 @@ class Hitokoto_Plugin implements Typecho_Plugin_Interface
         );
         $category = new Typecho_Widget_Helper_Form_Element_Checkbox(
             'category',
-            self::$category,
+            [
+                'a' => _t('动画'),
+                'b' => _t('漫画'),
+                'c' => _t('游戏'),
+                'd' => _t('文学'),
+                'e' => _t('原创'),
+                'f' => _t('来自网络'),
+                'g' => _t('其他'),
+                'h' => _t('影视'),
+                'i' => _t('诗词'),
+                'j' => _t('网易云'),
+                'k' => _t('哲学'),
+                'l' => _t('抖机灵'),
+            ],
             'a',
             _t('选择显示的一言类型')
         );
@@ -95,7 +94,7 @@ class Hitokoto_Plugin implements Typecho_Plugin_Interface
     <p>{from}</p>
 </div>
 EOF
-,
+            ,
             _t('一言显示自定义模板'),
             _t('可用变量参考：<a href="https://developer.hitokoto.cn/sentence/#返回格式" target="_blank">https://developer.hitokoto.cn/sentence/#返回格式</a>')
         );
@@ -177,6 +176,20 @@ EOF
      * @throws Typecho_Exception
      */
     public static function format($array){
+        $category = [
+            'a' => _t('动画'),
+            'b' => _t('漫画'),
+            'c' => _t('游戏'),
+            'd' => _t('文学'),
+            'e' => _t('原创'),
+            'f' => _t('来自网络'),
+            'g' => _t('其他'),
+            'h' => _t('影视'),
+            'i' => _t('诗词'),
+            'j' => _t('网易云'),
+            'k' => _t('哲学'),
+            'l' => _t('抖机灵'),
+        ];
         $template = Typecho_Widget::widget('Widget_Options')
             ->plugin('Hitokoto')->template;
 
@@ -187,7 +200,7 @@ EOF
                     $template = str_replace("{{$k}}", htmlspecialchars(date('Y-m-d H:i:s',$v)), $template);
                     break;
                 case 'type':
-                    $template = str_replace("{{$k}}", htmlspecialchars(self::$category[$v]), $template);
+                    $template = str_replace("{{$k}}", htmlspecialchars($category[$v]), $template);
                     break;
                 default:
                     $template = str_replace("{{$k}}", htmlspecialchars($v), $template);
