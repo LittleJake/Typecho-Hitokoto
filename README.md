@@ -1,4 +1,4 @@
-## Typecho挂件一言插件
+## Typecho一言插件
 [![Apache2](https://camo.githubusercontent.com/64d506383be67decddf8968e3b0072c3e9ba4a84/68747470733a2f2f696d672e736869656c64732e696f2f686578706d2f6c2f706c75672e737667)](LICENSE)
 [![HitCount](http://hits.dwyl.io/LittleJake/Typecho-hitokoto.svg)](http://hits.dwyl.io/LittleJake/Typecho-hitokoto)
 > 无论在哪里遇到你，我都会喜欢上你。
@@ -10,7 +10,7 @@
 具体接口调用选项参考 [这里](https://hitokoto.cn/api)
 
 
-json：
+### JSON返回
 ````json
 // https://v1.hitokoto.cn/
 // https://international.v1.hitokoto.cn/
@@ -40,6 +40,9 @@ json：
 ```
 
 4. 根据站点需要，在设置中定制个性化需求、修改自定义模板
+
+## 设置截图
+![screenshot](https://cdn.jsdelivr.net/gh/LittleJake/blog-static-files@imgs/imgs/20201026110127.png)
 
     
 
