@@ -19,10 +19,7 @@ class Hitokoto_Plugin implements Typecho_Plugin_Interface
      *
      * @return void
      */
-    public static function activate()
-    {
-        Typecho_Plugin::factory('Widget_Archive')->beforeRender = array('Hitokoto_Plugin');
-    }
+    public static function activate(){}
 
     /**
      * 禁用插件方法,如果禁用失败,直接抛出异常
